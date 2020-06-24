@@ -13,8 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' =>'web'], function(){
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('home');
+    Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+    Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login');
+    
+    Auth::routes(['verify' => true]);
 });
 
-Auth::routes();
+Route::fallback(function() {
+    return redirect()->route('home');
+});
