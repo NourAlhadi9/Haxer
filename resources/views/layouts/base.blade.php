@@ -63,7 +63,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ route('home') }}">H@x3R CTF</a>
+                    <a class="navbar-brand" href="{{ route('home') }}">H4x3R CTF</a>
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -115,12 +115,20 @@
 
             <!-- Footer -->
             <footer class="footer font-small bg-dark text-white">
-
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">Made with &hearts; by
-            <a href="https://fb.com/nouralhadi.mahmoud.3" target="_blank"> Nour Alhadi Mahmoud</a>
-            </div>
-            <!-- Copyright -->
+                <div class="footer-copyright text-center pt-3 h5">
+                    Follow me: 
+                    <a href="https://fb.com/nouralhadi.mahmoud.3" target="_blank"><i class="fa fa-lg fa-facebook-square ml-2"></i></a> 
+                    <a href="https://github.com/NourAlhadi" target="_blank"><i class="fa fa-lg fa-github ml-2"></i></a> 
+                    <a href="https://linkedin.com/in/NourAlhadi" target="_blank"><i class="fa fa-lg fa-linkedin ml-2"></i></a> 
+                    <a href="https://instagram.com/nouralhadi9" target="_blank"><i class="fa fa-lg fa-instagram ml-2"></i></a> 
+                    
+                </div>
+                
+                <!-- Copyright -->
+                <div class="footer-copyright text-center py-3">Made with &hearts; by
+                    <a href="https://fb.com/nouralhadi.mahmoud.3" target="_blank"> Nour Alhadi Mahmoud</a>
+                </div>
+                <!-- Copyright -->
 
             </footer>
             <!-- Footer -->
