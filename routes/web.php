@@ -14,13 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' =>'web'], function(){
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('home');
+    Route::get('/', function() { return view('welcome'); } )->name('home');
     Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
     Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login');
     
     Auth::routes(['verify' => true]);
+
+
+    Route::group(['middleware' => ['auth', 'verified']],function(){
+        // My Teams
+        Route::get('/teams/my', 'TeamController@index')->name('myteams.index');
+        Route::post('/teams/new', 'TeamController@store')->name('myteams.create');
+        Route::post('/teams/update/{tid}', 'TeamController@update')->name('myteams.update');
+        Route::delete('/teams/delete/{tid}', 'TeamController@delete')->name('myteams.delete');
+        Route::post('/teams/kick/{tid}/{uid}', 'TeamController@kick')->name('myteams.kick');
+    });
+
+
 });
 
 Route::fallback(function() {

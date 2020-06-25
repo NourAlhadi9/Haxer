@@ -82,10 +82,10 @@
                         @if (Route::has('login'))
                             @auth
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{ url('/home') }}">Profile</a>
+                                    <a class="nav-link" aria-current="page" href="{{ route('myteams.index') }}">My Teams</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{ url('logout') }}">Logout</a>
+                                    <a class="nav-link" aria-current="page" href="{{ route('logout') }}">Logout</a>
                                 </li>
                             @else
                                 <li class="nav-item">
@@ -117,10 +117,10 @@
             <footer class="footer font-small bg-dark text-white">
                 <div class="footer-copyright text-center pt-3 h5">
                     Follow me: 
-                    <a href="https://fb.com/nouralhadi.mahmoud.3" target="_blank"><i class="fa fa-lg fa-facebook-square ml-2"></i></a> 
-                    <a href="https://github.com/NourAlhadi" target="_blank"><i class="fa fa-lg fa-github ml-2"></i></a> 
-                    <a href="https://linkedin.com/in/NourAlhadi" target="_blank"><i class="fa fa-lg fa-linkedin ml-2"></i></a> 
-                    <a href="https://instagram.com/nouralhadi9" target="_blank"><i class="fa fa-lg fa-instagram ml-2"></i></a> 
+                    <a href="https://fb.com/nouralhadi.mahmoud.3" target="_blank"><i class="fa fa-lg fa-facebook-square ml-2 text-white"></i></a> 
+                    <a href="https://github.com/NourAlhadi" target="_blank"><i class="fa fa-lg fa-github ml-2 text-white"></i></a> 
+                    <a href="https://linkedin.com/in/NourAlhadi" target="_blank"><i class="fa fa-lg fa-linkedin ml-2 text-white"></i></a> 
+                    <a href="https://instagram.com/nouralhadi9" target="_blank"><i class="fa fa-lg fa-instagram ml-2 text-white"></i></a> 
                     
                 </div>
                 
@@ -135,10 +135,23 @@
         </div>
         
         
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="{{ asset('js/app.js') }}" type="text/javascript" defer></script>
         <script src="{{ asset('js/particles.js') }}"></script>
         <script src="{{ asset('js/particles-app.js') }}"></script>
         <script>
+
+            window.onload = function () {
+                @if($errors->any())
+                    Swal.fire({
+                        title: 'Error!',
+                        text: '{{$errors->first()}}',
+                        icon: 'error',
+                        confirmButtonText: 'Close'
+                    });
+                @endif
+            };
+
             particlesJS.load('particles-js', "{{ asset('particles.json')}}", function() {
                 console.log('callback - particles.js config loaded');
             });
