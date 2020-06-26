@@ -67,13 +67,13 @@
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                        <a class="nav-link {{ (strpos(Route::currentRouteName(), 'home') == 0) ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Home</a>
+                            <a class="nav-link {{ (strpos(Route::currentRouteName(), 'home') === 0) ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link " href="#">Link</a>
+                            <a class="nav-link {{ (strpos(Route::currentRouteName(), 'teams') === 0) ? 'active' : '' }}" href="{{ route('teams.index') }}">Teams</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link" href="">Contests</a>
                         </li>
                     </ul>
 
@@ -82,7 +82,7 @@
                         @if (Route::has('login'))
                             @auth
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="{{ route('myteams.index') }}">My Teams</a>
+                                    <a class="nav-link {{ (strpos(Route::currentRouteName(), 'myteams') === 0) ? 'active' : '' }}" aria-current="page" href="{{ route('myteams.index') }}">My Teams</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="{{ route('logout') }}">Logout</a>
@@ -105,10 +105,13 @@
             </nav>
             
             <div class="flex-center position-ref full-height">
-                
-                <div class="container mt-5">
+                @if($needContainer ?? '')
                     @yield('content')
-                </div>
+                @else
+                    <div class="container mt-5">
+                        @yield('content')
+                    </div>
+                @endif
             </div>
 
             
@@ -152,9 +155,7 @@
                 @endif
             };
 
-            particlesJS.load('particles-js', "{{ asset('particles.json')}}", function() {
-                console.log('callback - particles.js config loaded');
-            });
+            particlesJS.load('particles-js', "{{ asset('particles.json')}}");
         </script>
         @yield('js')
     </body>

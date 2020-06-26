@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-12 card">
             <div class="card-body">
                 <h5 class="card-title text-center">{{ $user->username }}'s Teams</h5>
@@ -33,21 +33,20 @@
                         <table class="table table-responsive row">
                             <thead class="table-light">
                                 <tr class="row">
-                                    <th scope="col" class="col-2">Team Name</th>
-                                    <th scope="col" class="col-4">Team Members</th>
-                                    <th scope="col" class="col-2">Team Country</th>
-                                    <th scope="col" class="col-2">Team Institution</th>
-                                    <th scope="col" class="col-2">Team Operations</th>
+                                    <th class="col-4 col-lg-2">Team Name</th>
+                                    <th class="col-4 d-none d-lg-table-cell">Team Members</th>
+                                    <th class="col-4 col-lg-2">Team Country</th>
+                                    <th class="col-2 d-none d-lg-table-cell">Team Institution</th>
+                                    <th class="col-4 col-lg-2">Team Operations</th>
                                 </tr>
                             </thead>
-                            @foreach ($teams as $team)
-                                <tbody>
-                                    <tr class="row">
-                                        <td class="col-2">{{$team->name}}</td>
-                                        <td class="col-4">
+                            <tbody>
+                                @foreach ($teams as $team)
+                                    <tr class="row" id="team-row-{{$team->id}}">
+                                        <td class="col-4 col-lg-2">{{$team->name}}</td>
+                                        <td class="col-4 d-none d-lg-table-cell">
                                             @foreach ($team->users as $user)
-                                                <div id="team-user-{{$user->id}}">
-                                                    @if($loop->index > 0) - @endif
+                                                <div id="team-{{$team->id}}-user-{{$user->id}}">
                                                     {{ $user->username }}
 
                                                     @if($team->captain === $user->username)
@@ -58,13 +57,11 @@
                                                 </div>
                                             @endforeach
                                         </td>
-                                        <td class="col-2"><img src="{{$team->country->flag}}" height="25px" width="50px"></td>
-                                        <td class="col-2">{{ucfirst($team->institution)}}</td>
-                                        <td class="col-2">
+                                        <td class="col-4 col-lg-2"><img src="{{$team->country->flag}}" height="25px" width="50px"></td>
+                                        <td class="col-2 d-none d-lg-table-cell">{{ucfirst($team->institution)}}</td>
+                                        <td class="col-4 col-lg-2">
                                             @if($team->captain !== Auth::user()->username)
-                                                <div class="alert alert-danger">
-                                                    Sorry operations are for team captain only.
-                                                </div>
+                                                <input type="button" class="btn btn-danger" value="Leave" onclick="leaveTeam('{!!Auth::user()->id!!}','{!!$team->id!!}')">
                                             @else
                                                 
                                                 
@@ -119,8 +116,8 @@
                                             @endif
                                         </td>
                                     </tr>
-                                </tbody>
-                            @endforeach
+                                @endforeach
+                            </tbody>
                         </table>
                     @endif
                 </p>
@@ -175,6 +172,52 @@
 
 @section('js')
 <script>
+
+    function leaveTeam(uid, tid) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This operation is irreversible, are you sure you want to leave?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Leave!'
+        }).then((result) => {
+            if (result.value) {
+                let url = '{{ route("myteams.leave", [":tid", ":uid"]) }}';
+                url = url.replace(':tid', tid);
+                url = url.replace(':uid', uid);
+
+                let xhttp = new XMLHttpRequest();
+                let csrf = document.querySelector('meta[name="csrf-token"]').content;
+                xhttp.open("POST", url, true);
+                xhttp.setRequestHeader("X-CSRF-TOKEN", csrf);
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let response = JSON.parse(this.responseText);
+                        if (response.result === 'error') {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'Close'
+                            });
+                        }else {
+                            Swal.fire({
+                                title: 'Success',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'Close'
+                            });
+                            document.getElementById('team-row-' + tid).remove();
+                        }
+                    }
+                };
+                xhttp.send();     
+            }
+        });
+    }
+
     function kickFromTeam(uid, tid) {
         let url = '{{ route("myteams.kick", [":tid", ":uid"]) }}';
         url = url.replace(':tid', tid);
@@ -201,7 +244,9 @@
                         icon: 'success',
                         confirmButtonText: 'Close'
                     });
-                    document.getElementById('team-user-' + uid).remove();
+
+                    let el = document.getElementById('team-' + tid + '-user-' + uid);
+                    el.remove();
                 }
             }
         };
