@@ -14,4 +14,12 @@ class Team extends Model {
         return $this->belongsTo('App\Models\Country');
     }
 
+    public function submissions() {
+        return $this->hasMany('App\Models\Submission');
+    }
+
+    public function contests() {
+        return $this->belongsToMany('App\Models\Contest');
+    }
+
 }

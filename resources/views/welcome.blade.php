@@ -16,7 +16,7 @@
 
             <div class="text-white text-center mb-5">
                 <h1 class="display-5 mb-3">Is it for teams or individuals?</h1>
-                <h2 class="h4">Preferably it's for teams, but everyone is welcomed!!</h1>
+                <h2 class="h4">Preferably it's for teams, but teams of one are still teams.</h1>
             </div>
 
             <div class="text-white text-center mb-5">
