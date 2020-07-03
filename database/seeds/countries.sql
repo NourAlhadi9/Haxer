@@ -1,5 +1,3 @@
-TRUNCATE TABLE countries;
-
 INSERT INTO countries (id, name, code, flag, created_at, updated_at) VALUES
 (1, 'Afghanistan', 'AFG', 'https://restcountries.eu/data/afg.svg', NULL, NULL),
 (2, 'Åland Islands', 'ALA', 'https://restcountries.eu/data/ala.svg', NULL, NULL),
