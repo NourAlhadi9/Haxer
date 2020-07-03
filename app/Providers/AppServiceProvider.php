@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-
+use App;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(env('APP_ENV') !== 'local') {
+        if(App::environment() !== 'local') {
             \URL::forceScheme('https');
         }
     }
