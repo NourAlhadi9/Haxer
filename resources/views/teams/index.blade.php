@@ -124,7 +124,6 @@
 </div>
 
 <form id="go-form" method="GET" action="{{route('teams.index')}}">
-    @csrf
     <input type="hidden" name="filter-order">
     <input type="hidden" name="filter-name">
     <input type="hidden" name="filter-country">

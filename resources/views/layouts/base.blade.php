@@ -73,7 +73,7 @@
                             <a class="nav-link {{ (strpos(Route::currentRouteName(), 'teams') === 0) ? 'active' : '' }}" href="{{ route('teams.index') }}">Teams</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Contests</a>
+                            <a class="nav-link {{ (strpos(Route::currentRouteName(),'contests') === 0) ? 'active' : '' }}" href="{{ route('contests.index') }}">Contests</a>
                         </li>
                     </ul>
 

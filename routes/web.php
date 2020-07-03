@@ -34,6 +34,9 @@ Route::group(['middleware' =>'web'], function(){
         Route::get('/teams', 'TeamController@index')->name('teams.index');
         Route::post('/teams/join/{tid}/{uid}', 'TeamController@join')->name('teams.join');
 
+        // contests
+        Route::get('/contests', 'ContestController@index')->name('contests.index');
+
     });
 
 

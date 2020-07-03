@@ -66,10 +66,10 @@
                                                 
                                                 
                                                 <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#teamsModal{{$team->id}}">Update</button>
-                                                <form method="POST" action="{{ route('myteams.delete',[$team->id])}}">
+                                                <form id="teamDelete{{$team->id}}" method="POST" action="{{ route('myteams.delete',[$team->id])}}">
                                                     @csrf
                                                     @method('delete')
-                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                    <input type="button" value="Delete" class="btn btn-danger" onclick="deleteTeam('{{$team->id}}')">
                                                 </form>
                                                 
                                                 
@@ -172,6 +172,23 @@
 
 @section('js')
 <script>
+
+    function deleteTeam(tid) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This operation is irreversible, are you sure you want to delete the team?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Delete!'
+        }).then((result) => {
+            if (result.value) {
+                let form = document.querySelector('#teamDelete'+tid);
+                form.submit();
+            }
+        });
+    }
 
     function leaveTeam(uid, tid) {
         Swal.fire({

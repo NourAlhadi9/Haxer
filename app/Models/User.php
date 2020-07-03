@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -39,5 +40,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function teams() {
         return $this->belongsToMany('App\Models\Team');
+    }
+    
+    public function contests() {
+        return $this->hasManyDeep('App\Models\Contest', ['team_user', 'App\Models\Team', 'contest_team']);
     }
 }
