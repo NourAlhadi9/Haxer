@@ -19,8 +19,8 @@ class CreateProblemsTable extends Migration
             $table->text('hint');
             $table->string('flag');
             $table->string('fileurl')->nullable();
-            $table->foreignId('contest_id')->constrained();
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('contest_id')->constrained()->references('id')->on('contests');
+            $table->foreignId('category_id')->constrained()->references('id')->on('categories');
             $table->timestamps();
         });
     }

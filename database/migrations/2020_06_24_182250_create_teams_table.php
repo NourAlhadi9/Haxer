@@ -18,7 +18,7 @@ class CreateTeamsTable extends Migration
             $table->string('name')->unique();
             $table->string('institution');
             $table->string('captain');
-            $table->foreignId('country_id')->constrained();
+            $table->foreignId('country_id')->constrained()->references('id')->on('countries');
             $table->integer('overall_score')->default(0);
             $table->timestamps();
         });

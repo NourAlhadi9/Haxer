@@ -15,8 +15,8 @@ class CreateContestTeamTable extends Migration
     {
         Schema::create('contest_team', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contest_id')->constrained();
-            $table->foreignId('team_id')->constrained();
+            $table->foreignId('contest_id')->constrained()->references('id')->on('contests');
+            $table->foreignId('team_id')->constrained()->references('id')->on('teams');
             $table->timestamps();
         });
     }
